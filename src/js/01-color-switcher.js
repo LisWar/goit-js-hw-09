@@ -14,23 +14,28 @@ const stopBtn =  document.querySelector('[data-stop]')
 startBtn.addEventListener('click', handleStart);
 stopBtn.addEventListener('click', handleStop);
 
+stopBtn.disabled = true;
+
 function handleStart({target}) {
     interval = setInterval(() => {
         changeColor(body)
     }, 1000);
 
     // target.classList.add('inactive');
-    target.disabled = true;
-    console.log('target: ', target);
+    startBtn.disabled = true;
+    stopBtn.disabled = false;
+    // console.log('target: ', target);
     startBtn.removeEventListener('click', handleStart);
 }
 
 function handleStop() {
     clearInterval(interval);
     startBtn.disabled = false;
+    stopBtn.disabled = true;
+
     startBtn.addEventListener('click', handleStart);
 
-    console.log('interval stopped');
+    // console.log('interval stopped');
 }
 
 function changeColor(elem) {

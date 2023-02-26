@@ -3,7 +3,7 @@
 
 import Notiflix from 'notiflix';
 
-Notiflix.Notify.failure('NPM import of flatpickr (commented in code) does not work and displaces DIV content. \nUsed HTML script import instead', {messageMaxLength: '150',height: '400px', width: '800px', position:'center-top', fontSize: '24px', timeout: '10000', clickToClose: 'true'});
+// Notiflix.Notify.failure('NPM import of flatpickr (commented in code) does not work and displaces DIV content. \nUsed HTML script import instead', {messageMaxLength: '150',height: '400px', width: '800px', position:'center-top', fontSize: '24px', timeout: '10000', clickToClose: 'true'});
 const datePicker = document.querySelector("#datetime-picker");
 
 // let difval = {days:0, hours:0, minutes:0, seconds:0,};
@@ -11,6 +11,7 @@ let dif = 0;
 let interval = null;
 const display = {days:document.querySelector('[data-days]'), hours:document.querySelector('[data-hours]'),minutes:document.querySelector('[data-minutes]'),seconds:document.querySelector('[data-seconds]'),}
 const btn = document.querySelector('button')
+btn.disabled = true;
 
 
 const options = {
@@ -24,10 +25,9 @@ const options = {
         return;
       }
       if (selectedDates[0] > Date.now()) {
+        btn.disabled = false;
         btn.addEventListener('click', handleSubmit)
         dif = selectedDates[0] - Date.now();
-        
-
         return;
       }
     },
@@ -40,8 +40,9 @@ function handleSubmit(e) {
   e.preventDefault()
   setCountdown(dif);
   btn.removeEventListener('click', handleSubmit);
-  btn.classList.add('inactive');
+  // btn.classList.add('inactive');
 
+  btn.disabled = true;
 
 }
 
@@ -59,7 +60,7 @@ function setCountdown(dif) {
 
 function setData(dif) {
   const {days, hours, minutes, seconds} = convertMs(dif);
-  console.log('convertMs(dif): ', convertMs(dif));
+  // console.log('convertMs(dif): ', convertMs(dif));
   display.days.textContent = addLeadingZero(days);
   display.hours.textContent = addLeadingZero(hours);
   display.minutes.textContent = addLeadingZero(minutes);
